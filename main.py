@@ -4,7 +4,7 @@ from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
 
-token = "ODg3NzE5MDM2MDIzMDgzMDA4.YUIOxw.sCKYW5UL79T5xcZ4Sf1jTtmRAOc"
+token = "ODg5NTI1Mzc0MDM0MjY4MjEw.YUihDw.jRgqizp1q1A1HGiQfRhUg88C2A0"
 
 intents = discord.Intents.default()
 intents.members = True
@@ -126,5 +126,9 @@ async def buy(ctx, product_id):
         await ctx.send(embed=embed)
     else:
         return "No hi han prous diners"
+
+async def gives(ctx, user):
+    print(user, type(user))
+    await ctx.send(f"{user}, {type(user)}")
 
 client.run(token)
