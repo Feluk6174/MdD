@@ -4,7 +4,7 @@ from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
 
-token = "ODg5NTI1Mzc0MDM0MjY4MjEw.YUihDw.jRgqizp1q1A1HGiQfRhUg88C2A0"
+token = "ODg5NTI1Mzc0MDM0MjY4MjEw.YUihDw.jRgqizp1q1A1HGiQfRhUg88C2A0hahaha"
 
 intents = discord.Intents.default()
 intents.members = True
