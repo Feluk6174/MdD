@@ -15,7 +15,10 @@ client.remove_command("help")
 
 
 help_text = """help --> Mostra aquest missatge
-say --> re envia el text ue li diguis, si es mes d'na paraula ha d'star entre cometes"""
+sell --> Posa en venta un producte (mes informacio a #com-funciona)
+buy --> Serveix per comprar un producte (mes informacio a #com-funciona)
+cartera --> Mostra la cantitat de ligma que tens
+give --> Serveix per donar una cantitat de ligma a un usuari ex: $give 20 @Feluk6174"""
 
 @client.event
 async def on_ready():
@@ -112,7 +115,8 @@ async def buy(ctx, product_id):
     buyer = database.check_balance(ctx.message.author.id)
     product = database.search_oferta(product_id)
     if not len(product) == 1:
-        return "ID incorrecte"
+        embed = discord.Embed(title="Error!!",description="ID incorrecte")
+        await ctx.send(embed=embed)
     price = product[0][5]
     seller = database.check_balance(product[0][3])
     if buyer[0][2] >= price:
@@ -125,10 +129,31 @@ async def buy(ctx, product_id):
         embed = discord.Embed(title="Fet!!",description=f"Has comprat {product[0][0]} per {product[0][5]} ligma")
         await ctx.send(embed=embed)
     else:
-        return "No hi han prous diners"
+        embed = discord.Embed(title="Error!!",description="No tens prous diners")
+        await ctx.send(embed=embed)
 
-async def gives(ctx, user):
-    print(user, type(user))
-    await ctx.send(f"{user}, {type(user)}")
+@client.command()
+async def give(ctx, price, user):
+    reciber = database.check_balance(int(user[3:-1]))
+    donator = database.check_balance(ctx.message.author.id)
+    
+    price = int(price)
+
+    if donator[0][2] >= price:
+        if price > 0:
+            with open("./log.txt", "a") as f:
+                f.write(f"{datetime.now()}: {ctx.message.author.name}({ctx.message.author.id}) Ha donat {price} ligma a {reciber[0][1]}({reciber[0][0]})\n")
+            database.modificar_cartera(reciber[0][0], price)
+            database.modificar_cartera(donator[0][0], -price)
+
+            embed = discord.Embed(title="Fet!!",description=f"Has donat {price} ligma a {user}")
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="Error!!",description="Nomes es pot donar un a cantitat superior a 0 ligma")
+            await ctx.send(embed=embed)
+
+    else:
+        embed = discord.Embed(title="Error!!",description="No tens prous diners")
+        await ctx.send(embed=embed)
 
 client.run(token)
