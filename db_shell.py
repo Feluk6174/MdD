@@ -2,7 +2,7 @@ import sqlite3
 
 
 while True:
-    conn = sqlite3.connect("usuaris.db")
+    conn = sqlite3.connect("../MdD_extra/usuaris.db")
 
     c = conn.cursor()
     sql = input("   >> ")
