@@ -4,7 +4,8 @@ from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
 
-token = "ODg5NTI1Mzc0MDM0MjY4MjEw.YUihDw.jRgqizp1q1A1HGiQfRhUg88C2A0hahaha"
+with open("./token.txt", "r") as f:
+    token = f.read()
 
 intents = discord.Intents.default()
 intents.members = True
