@@ -4,7 +4,8 @@ from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
 
-token = "ODg5NTI1Mzc0MDM0MjY4MjEw.YUihDw.jRgqizp1q1A1HGiQfRhUg88C2A0"
+with open("../MdD_extra/token.txt", "r") as f:
+    token = f.read()
 
 intents = discord.Intents.default()
 intents.members = True
@@ -26,7 +27,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    with open("./log.txt", "a") as f:
+    with open("../MdD_extra/log.txt", "a") as f:
         f.write(f"{datetime.now()}: {member.name}({member.id}) joined the server\n")
     channel = client.get_channel(888451461879578684)
     if len(database.check_balance(member.id)) == 0:
@@ -38,7 +39,7 @@ async def on_member_join(member):
 
 @client.command()
 async def cartera(ctx):
-    with open("./log.txt", "a") as f:
+    with open("../MdD_extra/log.txt", "a") as f:
         f.write(f"{datetime.now()}: {ctx.message.author.name}({ctx.message.author.id}) checked his ballance\n")
     data = database.check_balance(ctx.message.author.id)
     embed = discord.Embed(title="Cartera",description=f"La cartera d'en <@{ctx.message.author.id}> conte {data[0][2]} ligma")
@@ -47,7 +48,7 @@ async def cartera(ctx):
 
 @client.command()
 async def help(ctx):
-    with open("./log.txt", "a") as f:
+    with open("../MdD_extra/log.txt", "a") as f:
         f.write(f"{datetime.now()}: {ctx.message.author.name}({ctx.message.author.id}) asked for help\n")
     embed = discord.Embed(title="Nessesites ajuda?",description=help_text)
     await ctx.send(embed=embed)
@@ -55,9 +56,9 @@ async def help(ctx):
 
 @client.command()
 async def sell(ctx, titol, descripcio, preu):
-    with open("./abs_num.txt", "r") as f:
+    with open("../MdD_extra/abs_num.txt", "r") as f:
         num = int(f.read())
-    with open("./abs_num.txt", "w") as f:
+    with open("../MdD_extra/abs_num.txt", "r") as f:
         f.write(str(num+1))
     
     id_seller = "_".join(titol.split(" "))+">"+str(num)
@@ -96,7 +97,7 @@ async def sell(ctx, titol, descripcio, preu):
         """
     channel = client.get_channel(888452914023120937)
 
-    with open("./log.txt", "a") as f:
+    with open("../MdD_extra/log.txt", "a") as f:
         f.write(f"{datetime.now()}: {ctx.message.author.name}({ctx.message.author.id}) started to sell {titol} with a description stating: {descripcio} for a price of {preu} ligma\n")
 
     embed = discord.Embed(title="Ofertes!",description=text)
@@ -122,7 +123,7 @@ async def buy(ctx, product_id):
     if buyer[0][2] >= price:
         database.modificar_cartera(seller[0][0], price)
         database.modificar_cartera(buyer[0][0], -price)
-        with open("./log.txt", "a") as f:
+        with open("../MdD_extra/log.txt", "a") as f:
             f.write(f"{datetime.now()}: {ctx.message.author.name}({ctx.message.author.id}) bought {product[0][1]} for {product[0][5]} ligma from {seller[0][1]}({seller[0][0]}\n")
         role = get(ctx.guild.roles, name=product[0][0]+"_buy")
         await ctx.message.author.add_roles(role)
@@ -141,7 +142,7 @@ async def give(ctx, price, user):
 
     if donator[0][2] >= price:
         if price > 0:
-            with open("./log.txt", "a") as f:
+            with open("../MdD_extra/log.txt", "a") as f:
                 f.write(f"{datetime.now()}: {ctx.message.author.name}({ctx.message.author.id}) Ha donat {price} ligma a {reciber[0][1]}({reciber[0][0]})\n")
             database.modificar_cartera(reciber[0][0], price)
             database.modificar_cartera(donator[0][0], -price)
