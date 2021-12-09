@@ -1,8 +1,9 @@
 import sqlite3
 
+path = ""
 
 while True:
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
     sql = input("   >> ")

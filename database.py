@@ -1,12 +1,14 @@
 import sqlite3
 
-conn = sqlite3.connect("../MdD_extra/usuaris.db")
+path = ""
+
+conn = sqlite3.connect(path+"usuaris.db")
 
 
 c = conn.cursor()
 
 def create_usuaris():
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
 
@@ -23,7 +25,7 @@ def create_usuaris():
     conn.close()
 
 def create_ofertes():
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
 
@@ -43,7 +45,7 @@ def create_ofertes():
     conn.close()
 
 def add_user(id, name, cantitat=25):
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
     params = (id, name, cantitat)
@@ -52,7 +54,7 @@ def add_user(id, name, cantitat=25):
     conn.close()
 
 def search_user(id):
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
     c.execute("SELECT * FROM usuaris WHERE id == ")
@@ -60,7 +62,7 @@ def search_user(id):
     conn.close()
 
 def check_balance(id):
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
     params = (id)
@@ -72,7 +74,7 @@ def check_balance(id):
     return res
 
 def add_oferta(id, titol, descripcio, seller_id, seller_usuari, preu):
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
     params = (id, titol, descripcio, seller_id, seller_usuari, preu)
@@ -81,7 +83,7 @@ def add_oferta(id, titol, descripcio, seller_id, seller_usuari, preu):
     conn.close()
 
 def check_ofertes():
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
     params = (id)
@@ -93,7 +95,7 @@ def check_ofertes():
     return res
 
 def search_oferta(id):
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
     sql = "SELECT * FROM ofertes WHERE id == '"+str(id)+"'"
@@ -104,7 +106,7 @@ def search_oferta(id):
     return res
 
 def modificar_cartera(id, cantitat):
-    conn = sqlite3.connect("../MdD_extra/usuaris.db")
+    conn = sqlite3.connect(path+"usuaris.db")
 
     c = conn.cursor()
 
